@@ -1,11 +1,14 @@
 package com.icc.curso.entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 
 @Entity
@@ -20,6 +23,11 @@ public class usuario implements Serializable{
 	private String email;
 	private String telefone;
 	private String senha;
+	
+	@OneToMany(mappedBy = "cliente")//indicando que esta mapeado como cliente, em outra classe que tem assosiação
+	private List<pedido> pedidos = new ArrayList<>();
+	
+	
 	
 	public usuario() {
 		
@@ -74,6 +82,10 @@ public class usuario implements Serializable{
 		this.senha = senha;
 	}
 
+	public List<pedido> getPedidos() {
+		return pedidos;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
