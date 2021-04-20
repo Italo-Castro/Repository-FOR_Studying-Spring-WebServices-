@@ -2,10 +2,19 @@ package com.icc.curso.entidades;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+
+@Entity
 public class usuario implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	 
+	
+	@Id //anotattion para difinir que id e uma chave unica
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // definindo o auto-incrment para o id
 	private Long id;
 	private String nome;
 	private String email;
