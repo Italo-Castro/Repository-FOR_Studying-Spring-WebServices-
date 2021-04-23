@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.icc.curso.entidades.pedido;
 import com.icc.curso.entidades.usuario;
+import com.icc.curso.entidades.enums.PedidoStatus;
 import com.icc.curso.repositories.PedidoRepository;
 import com.icc.curso.repositories.usuarioRepository;
 
@@ -35,9 +36,9 @@ public class TesteConfig implements CommandLineRunner{
 		
 			
 		
-		pedido p1 = new pedido(null, Instant.parse("2019-06-20T19:53:07Z"), u1); // u1 e o objeto usuario 1 que e passado como parametro pois eles tem relação de um para muitos pra um pois muitos pedidos podem estar associado a um so usuario.
-		pedido p2 = new pedido(null, Instant.parse("2019-07-21T03:42:10Z"), u2); // u2 e o objeto usuario 1 que e passado como parametro pois eles tem relação de um para muitos pra um pois muitos pedidos podem estar associado a um so usuario
-		pedido p3 = new pedido(null, Instant.parse("2019-07-22T15:21:22Z"), u1); 
+		pedido p1 = new pedido(null, Instant.parse("2019-06-20T19:53:07Z"), u1, PedidoStatus.PAGO); // u1 e o objeto usuario 1 que e passado como parametro pois eles tem relação de um para muitos pra um pois muitos pedidos podem estar associado a um so usuario.
+		pedido p2 = new pedido(null, Instant.parse("2019-07-21T03:42:10Z"),u2, PedidoStatus.AGUARDANDANDO_PAGAMENTO); // u2 e o objeto usuario 1 que e passado como parametro pois eles tem relação de um para muitos pra um pois muitos pedidos podem estar associado a um so usuario
+		pedido p3 = new pedido(null, Instant.parse("2019-07-22T15:21:22Z"),u1, PedidoStatus.AGUARDANDANDO_PAGAMENTO); 
 		
 		orderRepository.saveAll(Arrays.asList(p1,p2,p3));
 		

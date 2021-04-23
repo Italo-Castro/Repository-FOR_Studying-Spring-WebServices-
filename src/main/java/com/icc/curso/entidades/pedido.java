@@ -9,9 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.swing.JOptionPane;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-/sdaf
+import com.icc.curso.entidades.enums.PedidoStatus;
+
 @Entity
 public class pedido implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -26,7 +28,7 @@ public class pedido implements Serializable{
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyy-MM-dd'T'HH:mm:ss'Z' ", timezone = "GMT")
 	private Instant momento;
-	
+	private Integer pedidoStatus;
 	
 	
 	
@@ -34,25 +36,34 @@ public class pedido implements Serializable{
 	@ManyToOne //indicando que ha um relacionamento de muitos pra um
 	@JoinColumn(name = "clienteId") //indicando qual  o nome da chave estrangeira
 	private usuario cliente;
-
-	
-	
-	
-	
 	
 	public pedido() {
 		
 	}
 	
-	public pedido(Long id, Instant momento, com.icc.curso.entidades.usuario usuario) {
+	public pedido(Long id, Instant momento, com.icc.curso.entidades.usuario usuario, PedidoStatus pedidoStatus) {
 		super();
 		this.id = id;
 		this.momento = momento;
 		this.cliente = usuario;
+		setPedidoStatus(pedidoStatus);
 	}
 
 	public Long getId() {
 		return id;
+	}
+	
+
+	public PedidoStatus getPedidoStatus() {
+		return PedidoStatus.valueOf(pedidoStatus);
+	}
+
+	public void setPedidoStatus(PedidoStatus pedidoStatus) {
+		if(pedidoStatus != null) {
+		this.pedidoStatus = pedidoStatus.getCode();
+		}else {
+			JOptionPane.showMessageDialog(null,"Classe pedido, ao setar um status de pedido deu erro, pois ele esta vazio");
+		}
 	}
 
 	public void setId(Long id) {
