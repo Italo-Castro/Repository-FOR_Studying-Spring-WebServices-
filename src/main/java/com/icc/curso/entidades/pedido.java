@@ -10,19 +10,36 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+/sdaf
 @Entity
 public class pedido implements Serializable{
 	private static final long serialVersionUID = 1L;
 
+	
+	
+	
+	
 	@Id //anotattion para difinir que id e uma chave unica
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // definindo o auto-incrment para o id
 	private Long id;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyy-MM-dd'T'HH:mm:ss'Z' ", timezone = "GMT")
 	private Instant momento;
 	
-	@ManyToOne //indicando que ha um relacionamento de muito pra um
-	@JoinColumn(name = "clienteId") //indicando qual vair o nome da chave estrangeira
+	
+	
+	
+	
+	@ManyToOne //indicando que ha um relacionamento de muitos pra um
+	@JoinColumn(name = "clienteId") //indicando qual  o nome da chave estrangeira
 	private usuario cliente;
 
+	
+	
+	
+	
+	
 	public pedido() {
 		
 	}
