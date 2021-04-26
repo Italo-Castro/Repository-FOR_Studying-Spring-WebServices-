@@ -9,11 +9,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.icc.curso.entidades.Categoria;
+import com.icc.curso.entidades.Produto;
 import com.icc.curso.entidades.pedido;
 import com.icc.curso.entidades.usuario;
 import com.icc.curso.entidades.enums.PedidoStatus;
 import com.icc.curso.repositories.CategoriaRepository;
 import com.icc.curso.repositories.PedidoRepository;
+import com.icc.curso.repositories.ProdutoRepository;
 import com.icc.curso.repositories.usuarioRepository;
 
 @Configuration // defindo que e uma classe de configuracao
@@ -32,6 +34,12 @@ public class TesteConfig implements CommandLineRunner {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 
+	@Autowired
+	private ProdutoRepository productRepository;
+	
+	
+	
+	
 	@Override
 	public void run(String... args) throws Exception { //tudo que estiver neste metodo vai ser executado quando a aplicação for iniciada
 
@@ -40,6 +48,14 @@ public class TesteConfig implements CommandLineRunner {
 		Categoria  c2 = new Categoria(null,"Livros");			
 		Categoria  c3 = new Categoria(null,"Computadores");
 		categoriaRepository.saveAll(Arrays.asList(c1,c2,c3));
+		
+		
+		Produto produto1 = new Produto(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.5, "");
+		Produto produto2 = new Produto(null, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 2190.0, "");
+		Produto produto3 = new Produto(null, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 1250.0, "");
+		Produto produto4 = new Produto(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
+		Produto produto5 = new Produto(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
+		productRepository.saveAll(Arrays.asList(produto1,produto2,produto3,produto4,produto5));
 		
 		
 		usuario u1 = new usuario(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
