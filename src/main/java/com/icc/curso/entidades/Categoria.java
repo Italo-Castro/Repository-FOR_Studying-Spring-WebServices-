@@ -1,6 +1,5 @@
 package com.icc.curso.entidades;
 
-import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,7 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Categoria")
@@ -20,8 +22,9 @@ public class Categoria implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // definindo o auto-incrment para o id
 	private Long id;
 	private String nome;
-
-	@Transient
+	
+	@JsonIgnore
+	@ManyToMany(mappedBy = "categories")
 	private Set<Produto> products = new HashSet<>();		
 	
 	
