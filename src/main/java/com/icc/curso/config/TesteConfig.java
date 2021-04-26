@@ -9,11 +9,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.icc.curso.entidades.Categoria;
+import com.icc.curso.entidades.PedidoItem;
 import com.icc.curso.entidades.Produto;
 import com.icc.curso.entidades.pedido;
 import com.icc.curso.entidades.usuario;
 import com.icc.curso.entidades.enums.PedidoStatus;
 import com.icc.curso.repositories.CategoriaRepository;
+import com.icc.curso.repositories.PedidoItemRepository;
 import com.icc.curso.repositories.PedidoRepository;
 import com.icc.curso.repositories.ProdutoRepository;
 import com.icc.curso.repositories.usuarioRepository;
@@ -36,7 +38,10 @@ public class TesteConfig implements CommandLineRunner {
 
 	@Autowired
 	private ProdutoRepository productRepository;
-	
+	 
+	@Autowired
+	private PedidoItemRepository pedidoItemRepository;
+		
 	
 	
 	
@@ -78,8 +83,11 @@ public class TesteConfig implements CommandLineRunner {
 		pedido p3 = new pedido(null, Instant.parse("2019-07-22T15:21:22Z"),u1, PedidoStatus.AGUARDANDANDO_PAGAMENTO); 
 		orderRepository.saveAll(Arrays.asList(p1,p2,p3));
 		
-		
-		
+		PedidoItem oi1 = new PedidoItem(p1, produto1, 2, produto5.getPreco());
+		PedidoItem oi2 = new PedidoItem(p1, produto3, 1, produto4.getPreco());
+		PedidoItem oi3 = new PedidoItem(p2, produto3, 2, produto3.getPreco());
+		PedidoItem oi4 = new PedidoItem(p3, produto5, 2,produto5.getPreco());
+		pedidoItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3));
 		
 		
 	}
