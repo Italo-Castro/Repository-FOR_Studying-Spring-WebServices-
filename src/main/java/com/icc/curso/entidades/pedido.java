@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.swing.JOptionPane;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -33,6 +35,8 @@ public class pedido implements Serializable{
 	private Instant momento;
 	private Integer pedidoStatus;
 	
+	@OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)// quando for um para um, mapeamos o mesmo id para as duas classes
+	private Pagamento pagamento;
 	
 	
 	
@@ -97,6 +101,19 @@ public class pedido implements Serializable{
 	public Set<PedidoItem> getItems(){
 		return pedidoItem;
 	}
+
+	
+	
+	
+	public Pagamento getPagamento() {
+		return pagamento;
+	}
+
+
+	public void setPagamento(Pagamento pagamento) {
+		this.pagamento = pagamento;
+	}
+
 
 	@Override
 	public int hashCode() {
