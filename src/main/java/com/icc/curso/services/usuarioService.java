@@ -34,4 +34,18 @@ public class usuarioService {
 	public void delete(Long id) {
 		repository.deleteById(id);
 	}
+	
+	public usuario update(Long id, usuario obj) {
+		usuario entity = repository.getOne(id); //getOne instancia um usuario, mas nao vai no BD, ele somente deixa o obj mapeado, para que depois eu manipule ele no BD
+		updateData(entity,obj);
+		return repository.save(entity);
+		
+	}
+
+	private void updateData(usuario entity, usuario obj) {
+		entity.setNome(obj.getNome());
+		entity.setEmail(obj.getEmail());
+		entity.setTelefone(obj.getTelefone());
+		
+	}
 }
