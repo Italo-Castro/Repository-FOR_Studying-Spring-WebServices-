@@ -122,6 +122,15 @@ public class pedido implements Serializable{
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+	
+	public double getTotal() {
+		double sum = 0 ; 
+		for (PedidoItem x: pedidoItem) {
+			sum = sum + x.getSubTotal();
+		}
+		return sum;
+	}
+	
 
 	@Override
 	public boolean equals(Object obj) {

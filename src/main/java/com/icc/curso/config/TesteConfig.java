@@ -67,7 +67,7 @@ public class TesteConfig implements CommandLineRunner {
 		produto1.getCategories().add(c2); //adicionando a categoria2 a coleção de categorias que se encotra dentro de produtos
 		produto2.getCategories().add(c1);
 		produto2.getCategories().add(c3);
-		produto3.getCategories().add(c3);
+		produto3.getCategories().add(c3); 
 		produto4.getCategories().add(c3);
 		produto5.getCategories().add(c2);
 		
@@ -91,7 +91,7 @@ public class TesteConfig implements CommandLineRunner {
 		pedidoItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3));
 		
 		
-		Pagamento pg1 = new Pagamento(null,Instant.parse("2019-06-20T21:53:07Z"),p1);
+		Pagamento pg1 = new Pagamento(null,Instant.parse("2019-06-20T21:53:07Z"),p1); 
 		p1.setPagamento(pg1);
 		
 		orderRepository.save(p1);
