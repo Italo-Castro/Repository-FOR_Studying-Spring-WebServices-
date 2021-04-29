@@ -1,0 +1,57 @@
+[1mdiff --git a/src/main/java/com/icc/curso/resoucers/exceptions/ResoucerExceptionHandler.java b/src/main/java/com/icc/curso/resoucers/exceptions/ResoucerExceptionHandler.java[m
+[1mindex 84d0986..d4234a4 100644[m
+[1m--- a/src/main/java/com/icc/curso/resoucers/exceptions/ResoucerExceptionHandler.java[m
+[1m+++ b/src/main/java/com/icc/curso/resoucers/exceptions/ResoucerExceptionHandler.java[m
+[36m@@ -23,6 +23,14 @@[m [mpublic class ResoucerExceptionHandler {[m
+ 		return ResponseEntity.status(status).body(err);[m
+ 		[m
+ 	}[m
+[31m-	  [m
+[32m+[m	[32m@ExceptionHandler(DatabaseException.class)[m
+[32m+[m	[32mpublic ResponseEntity<StandardError> DatabasException(DatabaseException e,HttpServletRequest request){[m
+[32m+[m[41m		[m
+[32m+[m		[32mString error = "Database Error";[m
+[32m+[m		[32mHttpStatus status = HttpStatus.BAD_REQUEST;[m
+[32m+[m		[32mStandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());[m
+[32m+[m		[32mreturn ResponseEntity.status(status).body(err);[m
+[32m+[m[41m		[m
+[32m+[m	[32m}[m
+ 	[m
+ }[m
+[1mdiff --git a/src/main/java/com/icc/curso/services/usuarioService.java b/src/main/java/com/icc/curso/services/usuarioService.java[m
+[1mindex e14de0e..dd5c6c7 100644[m
+[1m--- a/src/main/java/com/icc/curso/services/usuarioService.java[m
+[1m+++ b/src/main/java/com/icc/curso/services/usuarioService.java[m
+[36m@@ -4,10 +4,13 @@[m [mimport java.util.List;[m
+ import java.util.Optional;[m
+ [m
+ import org.springframework.beans.factory.annotation.Autowired;[m
+[32m+[m[32mimport org.springframework.dao.DataIntegrityViolationException;[m
+[32m+[m[32mimport org.springframework.dao.EmptyResultDataAccessException;[m
+ import org.springframework.stereotype.Service;[m
+ [m
+ import com.icc.curso.entidades.usuario;[m
+ import com.icc.curso.repositories.usuarioRepository;[m
+[32m+[m[32mimport com.icc.curso.resoucers.exceptions.DatabaseException;[m
+ import com.icc.curso.services.exceptions.ResourceNotFoundException;[m
+ [m
+ @Service[m
+[36m@@ -32,8 +35,18 @@[m [mpublic class usuarioService {[m
+ 		[m
+ 	}[m
+ 	[m
+[32m+[m[41m	[m
+ 	public void delete(Long id) {[m
+[32m+[m		[32mtry {[m
+[32m+[m[41m			[m
+ 		repository.deleteById(id);[m
+[32m+[m[41m			[m
+[32m+[m		[32m}catch( EmptyResultDataAccessException e ) {[m
+[32m+[m			[32mthrow new ResourceNotFoundException(id);[m[41m	[m
+[32m+[m		[32m}[m
+[32m+[m		[32mcatch (DataIntegrityViolationException e) {[m
+[32m+[m			[32mthrow new DatabaseException(e.getMessage());[m
+[32m+[m		[32m}[m
+ 	}[m
+ 	[m
+ 	public usuario update(Long id, usuario obj) {[m

@@ -4,10 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.icc.curso.entidades.usuario;
 import com.icc.curso.repositories.usuarioRepository;
+import com.icc.curso.resoucers.exceptions.DatabaseException;
+import com.icc.curso.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class usuarioService {
@@ -23,7 +27,7 @@ public class usuarioService {
 	public usuario findById(Long id){
 		Optional<usuario> obj = repository.findById(id);
 		
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public usuario insert(usuario obj) {
@@ -31,8 +35,18 @@ public class usuarioService {
 		
 	}
 	
+	
 	public void delete(Long id) {
+		try {
+			
 		repository.deleteById(id);
+			
+		}catch( EmptyResultDataAccessException e ) {
+			throw new ResourceNotFoundException(id);	
+		}
+		catch (DataIntegrityViolationException e) {
+			throw new DatabaseException(e.getMessage());
+		}
 	}
 	
 	public usuario update(Long id, usuario obj) {
