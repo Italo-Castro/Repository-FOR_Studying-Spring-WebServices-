@@ -3,6 +3,8 @@ package com.icc.curso.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -51,8 +53,15 @@ public class usuarioService {
 	
 	public usuario update(Long id, usuario obj) {
 		usuario entity = repository.getOne(id); //getOne instancia um usuario, mas nao vai no BD, ele somente deixa o obj mapeado, para que depois eu manipule ele no BD
-		updateData(entity,obj);
-		return repository.save(entity);
+		
+		
+		try {
+			updateData(entity,obj);
+			return repository.save(entity);
+			
+		}catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);	
+		}
 		
 	}
 
